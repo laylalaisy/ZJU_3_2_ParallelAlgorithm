@@ -1,17 +1,37 @@
 # Parallel Algorithm Notes
 
-This is our (mainly mine and Zhudhjen's) notes for Parallel Algorithms course.
+## BIG THANKS:
+Big THANKS to @zenozeng : https://github.com/zenozeng/parallel-algorithm-notes
 
-作为一个外专业的弱菜，我决定建个笔记 repo 来帮助我进行思考。
-希望能有一种持久的形式作为基础，毕竟“心智之中并无词典”。
+I forked his notes while I cannot make it private during the class. Therefore, I clone his notes and reupload to make the repository private. 
 
-欢迎大家来 pull request 或者提 issue。
+Mainly notes are from his repository and I uploaded more of mine in note_layla & hw_layla folders.
 
-## Special Thanks
+## Mention:
+You are allowed to read all the codes and files, but you are not allowed to copy directly for your assignments!
 
-- 火龙果
+Please try yourself and have fun working on those interesting projects!
 
-- xqy
+## Courese Information：
+1. Course: Parallel Algorithm in ZJU
+2. Time: 2018/03/01 - 2018/07/01 
+
+## Syllabus:
+1. May 28: Survey students’ capability, covering parallel computation models, parallel summation, computing minimum.
+
+2. June 4: Complexity curve for minimum, prefix, optimization for prefix.
+
+3. June 11: Linked list prefix, pointer jumping, linked list coloring. Complexity curve for linked list coloring.
+
+4. June 18: Optimization for linked list prefix. Bitonic sorting. Integer sorting. Selection. All pairs shortest paths.
+
+
+## Program Infromation:
+1. See each program under hw_layla folders named hwx.     
+2. Including:    
+    · hwx_question.pdf / hwx_requirement.pdf: project's requirement from Professor   
+    · hwx_report.pdf: final project's report (Plz don't hand in for your homework though I deleted my private information)
+    · hwx_note.pdf: project's note and reference links
 
 ## TOC
 
@@ -24,6 +44,14 @@ This is our (mainly mine and Zhudhjen's) notes for Parallel Algorithms course.
 4. [Lecture 04](http://zenozeng.github.io/parallel-algorithm-notes/dist/04.html) by CSerxy
 
 5. [Lecture 05](http://zenozeng.github.io/parallel-algorithm-notes/dist/05.html) by Zeno Zeng
+
+## Homework Catalog
+1. hw0: covering parallel computation models + parallel summation, computing minimum.
+
+## Attention:
+1. All codes and notes will be open source after my final test (in case of copy)
+2. You are allowed to read all the codes and files, but you are not allowed to copy directly for your assignments.
+3. If you have any problems or ideas want to share with me, please feel free to e-mail to me: lsylayla@163.com / layla.laisy@gmail.com
 
 ## Dev
 
