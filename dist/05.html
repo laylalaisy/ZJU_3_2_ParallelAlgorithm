@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../static/github.css" type="text/css" />
+  <link rel="stylesheet" href="../static/styles.css" type="text/css" />
+  <script src="//zenozeng.github.io/MathJax/init.js" type="text/javascript"></script>
+</head>
+<body>
+<h1 id="lecture-05">Lecture 05</h1>
+<h2 id="讲的不知道叫什么">08:00-09:00 讲的，不知道叫什么</h2>
+<p>这一部分具体可以看郭翀的视频。</p>
+<p>首先我们 coloring。</p>
+<p>首先我们 build 一个 table (<span class="math">\(\frac{n}{\log\log{n}}\)</span> cols <span class="math">\(times\)</span> <span class="math">\(\log\log{n}\)</span> rows)，把所有的点都丢进去。 然后一些点被 pair off，这样点就下来，有的快，有的慢，所以参差不齐。</p>
+<p>pair off 策略：</p>
+<ul>
+<li><p>If both are top nodes, storing the lower one</p></li>
+<li><p>If both are top nodes, and same height, storing either one</p></li>
+</ul>
+<p>The min weight is 1, the max weight is <span class="math">\(\log{n}\)</span>, the total weight is <span class="math">\(\frac{n}{\log\log{n}}(1+2+4+...)\)</span></p>
+<p>我们需要　<span class="math">\(\frac{n}{\log{n}}\)</span> processors 和　<span class="math">\(\frac{n}{p}+\log{n}\)</span> time。</p>
+<p>Pack: <span class="math">\(\frac{n}{p} + \log{n}\)</span>。</p>
+<p>这个算法用于初步缩减 n 的数量使之小于　<span class="math">\(n\log{n}\)</span>。 这样我们之后就可以用　pointer jumping。</p>
+<p>这里我们说的高度为其格数，然后其　weight 为 1, 2, 4, 8... 然后我们就可以证明经过一次　round，总 weight 至少减少　<span class="math">\(\frac{1}{4}\)</span>。</p>
+<p>由于　<span class="math">\(weight &gt; 1\)</span>，所以必然有　<span class="math">\(count(nodes) &gt; \sum{weight}\)</span>。</p>
+<h2 id="bitonic-merging">Bitonic Merging</h2>
+<p>假设我们有两个<strong>排好序</strong>的数列，他们方向相反，我们把他们接起来</p>
+<p><span class="math">\[
+2 - 5 - 7 - 8 - 10
+\]</span></p>
+<p><span class="math">\[
+12 - 4 - 0
+\]</span></p>
+<p>然后二分</p>
+<p><span class="math">\[
+\begin{xy}
+\xymatrix {
+      2 \ar@/^2pc/ [rrrrr]
+    &amp; 5 \ar@/^2pc/ [rrrrr]
+    &amp; 7 \ar@/^2pc/ [rrrrr]
+    &amp; 8 \ar@/^2pc/ [rrrrr]
+    &amp; |
+    &amp; 10
+    &amp; 12
+    &amp; 4
+    &amp; 0 \ar
+}
+\end{xy}
+\]</span></p>
+<p>交换，将小数置前</p>
+<p><span class="math">\[
+\begin{xy}
+\xymatrix {
+      2
+    &amp; 5
+    &amp; 4
+    &amp; 0
+    &amp; |
+    &amp; 10
+    &amp; 12
+    &amp; 7
+    &amp; 8
+}
+\end{xy}
+\]</span></p>
+<p>再对半分</p>
+<p><span class="math">\[
+\begin{xy}
+\xymatrix {
+      2 \ar@/^2pc/ [rrr]
+    &amp; 5 \ar@/^2pc/ [rrr]
+    &amp; |
+    &amp; 4
+    &amp; 0
+    &amp; |
+    &amp; 10 \ar@/^2pc/ [rrr]
+    &amp; 12 \ar@/^2pc/ [rrr]
+    &amp; |
+    &amp; 7
+    &amp; 8
+}
+\end{xy}
+\]</span></p>
+<p>交换，将小数置前</p>
+<p><span class="math">\[
+\begin{xy}
+\xymatrix {
+      2
+    &amp; 0
+    &amp; 4
+    &amp; 5
+    &amp; 7
+    &amp; 8
+    &amp; 10
+    &amp; 12
+}
+\end{xy}
+\]</span></p>
+<p>再二分</p>
+<p><span class="math">\[
+\begin{xy}
+\xymatrix {
+      2 \ar@/^2pc/ [r]
+    &amp; 0
+    &amp; 4 \ar@/^2pc/ [r]
+    &amp; 5
+    &amp; 7 \ar@/^2pc/ [r]
+    &amp; 8
+    &amp; 10 \ar@/^2pc/ [r]
+    &amp; 12
+}
+\end{xy}
+\]</span></p>
+<p>交换，将小数置前，这就是我们最终 merge 的结果了</p>
+<p><span class="math">\[
+\begin{xy}
+\xymatrix {
+      0
+    &amp; 2
+    &amp; 4
+    &amp; 5
+    &amp; 7
+    &amp; 8
+    &amp; 10
+    &amp; 12
+}
+\end{xy}
+\]</span></p>
+<p>我们需要 <span class="math">\(\log{n}\)</span> steps，然后时间复杂度为 <span class="math">\(O(\frac{n}{p}\log{n}+\log{n})\)</span>。</p>
+<h2 id="bitonic-sorting">Bitonic Sorting</h2>
+<p>假设我们有这个数组需要排序。</p>
+<p><span class="math">\[
+\begin{xy}
+\xymatrix {
+      7 \ar@/^2pc/ [r]
+    &amp; 5
+    &amp; 4 \ar@/^2pc/ [r]
+    &amp; 3
+    &amp; 8 \ar@/^2pc/ [r]
+    &amp; 6
+    &amp; 2 \ar@/^2pc/ [r]
+    &amp; 1
+}
+\end{xy}
+\]</span></p>
+<p>我们将对象分为４组，每组我们将左边当成是一个数列，右边当成一个数列，我们做　Bitonic Merging。 这样我们得到了：</p>
+<p><span class="math">\[
+5 - 7 - | - 3 - 4 - || - 6 - 8 - | - 1 - 2
+\]</span></p>
+<p>然后我们将对象分为 2 组，每组我们将左边两个数当成一个数列，右边两个数当成一个数列。 我们再做　Bitonic Merging。</p>
+<p>这样有了：</p>
+<p><span class="math">\[
+3 - 4 - 5 - 7 - | - 1 - 2 - 6 - 8
+\]</span></p>
+<p>我们再做一次　Bitonic Merging， 就得到了 Sorting 的结果。</p>
+<p>Bitonic Sorting 的时间复杂度为：<span class="math">\(O(\frac{n}{p}\log^2{n}+\log^2{n})\)</span>。</p>
+<p>Hint: 如果需要简单的估算复杂度，可以直接取中间一段的最小值然后乘以那一段的 steps 作为下界。 对于上界，可以用最大复杂度乘以总体的 steps。</p>
+<h2 id="valiants-merging">Valiant's Merging</h2>
+<p>现在假设我们有两条排好序的数列，长度分别为 <span class="math">\(n\)</span> 和 <span class="math">\(m\)</span>，然后我们有 <span class="math">\(m+n\)</span> 个 processors。</p>
+<p>对于 <span class="math">\(n\)</span> 我们每 <span class="math">\(\sqrt{n}\)</span> 取一个节点，一共取出 <span class="math">\(\sqrt{n}\)</span> 个节点。 对于 <span class="math">\(m\)</span> 我们每 <span class="math">\(\sqrt{m}\)</span> 取一个节点，一共取出 <span class="math">\(\sqrt{m}\)</span> 个节点。 对于每个点，我们将其与另一条线上的所有点相连。 这样一来我们一共得到了 <span class="math">\(\sqrt{mn}\)</span> 条 links。</p>
+<p><span class="math">\[
+\newcommand{\node}[1]{
+    \enclose{circle}[mathcolor=&quot;black&quot;, padding=&quot;10px&quot;, thickness=&quot;1px&quot;]{\color{black}{#1}}
+}
+\]</span></p>
+<p><span class="math">\[
+\begin{xy}
+\xymatrix {
+    \node{0}
+    &amp; \node{\sqrt{n}}　\ar[ld] \ar[d] \ar[rd] \ar[rrd] \ar[rrrd]
+    &amp; \node{2\sqrt{n}}
+    &amp; \node{3\sqrt{n}}
+    &amp; \node{4\sqrt{n}}
+    &amp;...
+    \\
+    \node{0}
+    &amp; \node{\sqrt{m}}
+    &amp; \node{2\sqrt{m}}
+    &amp; \node{3\sqrt{m}}
+    &amp; \node{4\sqrt{m}}
+    &amp;...
+}
+\end{xy}
+\]</span></p>
+<p>对每条边我们比较两边的大小。这样一共需要计算 <span class="math">\(\sqrt{mn}\)</span> 次，通过不等式， 我们很容易证明 <span class="math">\(\sqrt{mn} &lt; m + n\)</span>，所以处理器肯定是够用的。</p>
+<p><span class="math">\[
+\begin{xy}
+\xymatrix {
+    \node{0}
+    &amp; \node{\sqrt{n}}　\ar[ld] \ar[d] \ar[rd] \ar[rrd] \ar[rrrd]
+    &amp; \node{2\sqrt{n}}
+    &amp; \node{3\sqrt{n}}
+    &amp; \node{4\sqrt{n}}
+    &amp;...
+    \\
+    \node{0}
+    &amp; \node{\sqrt{m}}
+    &amp; \node{2\sqrt{m}}
+    &amp; \node{3\sqrt{m}}
+    &amp; \node{4\sqrt{m}}
+    &amp;...
+    \\
+    0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; ...
+}
+\end{xy}
+\]</span></p>
+<p>我们比较结果，如果小于则写 0 在那条边上，如果大于则写 1 在那条边上。 对于一个节点其第一个 0 - 1 交替的位置就是我们要找的位置。 这样我们知道将 <span class="math">\(\sqrt{n}\)</span> 这个节点要被插在 <span class="math">\(2\sqrt{m}\)</span> 和 <span class="math">\(3\sqrt{m}\)</span> 之间。</p>
+<p>接下来我们要知道它具体要插在 <span class="math">\(2\sqrt{m}\)</span> 和 <span class="math">\(3\sqrt{m}\)</span> 之间哪个位置。 所以我们将 <span class="math">\(\sqrt{n}\)</span> 这个节点的值与 <span class="math">\(2\sqrt{m}\)</span> 和 <span class="math">\(3\sqrt{m}\)</span> 之间所有 <span class="math">\(\sqrt{m}\)</span> 个值进行比较。 而我们一共有 <span class="math">\(\sqrt{n} \times \sqrt{m} + \sqrt{m} \times \sqrt{n}\)</span> 次计算（课上说的好像是<span class="math">\(m+n\)</span>？但是我和郭翀都觉得是 <span class="math">\(2\sqrt{mn}\)</span>）要进行， 所以我们的处理器还是够的。</p>
+<p>要注意的是，我们不能只做一边的， 只有两边都做了，我们才能确定双向范围。</p>
+<p>还有要注意的是，我们每次 round 都只是标记（来限定范围）而已， 只有所有 round 结束了我们才会发生具体的操作。</p>
+<p>经过上一步，我们初步对这 <span class="math">\(\sqrt{m}\)</span> 和 <span class="math">\(\sqrt{n}\)</span> 段进行了 merge。 接下来我们对每一条之前 link 对应的 <span class="math">\(\sqrt{m} + \sqrt{n}\)</span> 个数据， 我们已经知道了这 <span class="math">\(\sqrt{m} + \sqrt{n}\)</span> 的整体位置。</p>
+<p>接下来，我们做和上一步一样的事情。这次一共有 <span class="math">\(\sqrt{mn}\)</span> 组， 每组有 <span class="math">\(\sqrt{m} + \sqrt{n}\)</span> 个数据。每组需要的处理器数是 <span class="math">\(2(mn)^{\frac{1}{4}}\)</span>。 所以处理器还是够的。</p>
+<p>这样不断迭代，一共 <span class="math">\(\log{n}\)</span> 代，我们就完成了整体的 merge。</p>
+<p>要注意的是我们不可能出现交叉的情况： <span class="math">\[
+\begin{xy}
+\xymatrix {
+    A \ar[rd] &amp; B \\
+    C \ar[ru] &amp; D
+}
+\end{xy}
+\]</span> 因为我们两个数列都是排好序的，已知了 <span class="math">\(A &lt; B\)</span>，<span class="math">\(C &lt; D\)</span>。 如果有 <span class="math">\(B &lt; C\)</span> 则有 <span class="math">\(B &lt; D\)</span>，则 <span class="math">\(A\rightarrow{D}\)</span> 这条 link 并不该存在。</p>
+<p>时间复杂度为：<span class="math">\(O(\frac{n}{p}\log\log{n} + \log\log{n})\)</span></p>
+<h2 id="valiants-sorting">Valiant's Sorting</h2>
+<p>就是将利用之前 Bitonic Sorting 所述的方法，将 Merging 转换为 Sorting。</p>
+<p>时间复杂度为：<span class="math">\(O(\frac{n}{p}\log{n}\log\log{n} + \log{n}\log\log{n})\)</span></p>
+</body>
+</html>
