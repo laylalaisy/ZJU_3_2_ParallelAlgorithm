@@ -46,7 +46,7 @@ Please try yourself and have fun working on those interesting projects!
 5. [Lecture 05](http://zenozeng.github.io/parallel-algorithm-notes/dist/05.html) by Zeno Zeng
 
 ## Homework Catalog
-1. hw0: covering parallel computation models + parallel summation, computing minimum.
+1. hw1: covering parallel computation models + parallel summation + computing minimum.
 
 ## Attention:
 1. All codes and notes will be open source after my final test (in case of copy)
