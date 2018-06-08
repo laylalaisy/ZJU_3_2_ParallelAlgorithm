@@ -1,9 +1,5 @@
 # Homework 2
 
-姓名： 来舒悦
-学号： 3150105330
-计算机科学与技术 1507
-
 ## Prefix Sum
 1. (20 points) Write a parallel program to compute **prefix sum** for an array of **n numbers** using **n processors**.  
 - Imitation:
